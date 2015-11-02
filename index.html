@@ -54,10 +54,12 @@
 
 	var crop_y;
 	var rotate;
-	
+
+	var centerX;
+	var centerY;
 	function decreaseSize(){
-		var centerX = img_x + (w2/2);
-		var centerY = img_y + (h2/2);
+		centerX = img_x + (w2/2);
+		centerY = img_y + (h2/2);
 		
 		var resizer = .9;
 		w2 *= resizer;
@@ -71,8 +73,8 @@
 	
 	function increaseSize(){
 		// find center
-		var centerX = img_x + (w2/2);
-		var centerY = img_y + (h2/2);
+		centerX = img_x + (w2/2);
+		centerY = img_y + (h2/2);
 
 	    var resizer = 1/.9;
 		w2 *= resizer;
@@ -95,11 +97,7 @@
 		drawCanvas();
 		
 	}
-	function test(){
-		//((crop_x-img_x)/w2) * img.width)
-	  document.getElementById("w2").innerHTML =  ((crop_y - img_y)/h2 * img.height);
-	  //document.getElementById("h2").innerHTML =  ;
-	}
+
 	function moveUp(){
 		img_y -= (h2/30);
 		drawCanvas();
@@ -111,8 +109,12 @@
 	}
 	function rotate()
 	{
+		console.log(centerX + "   " + centerY);
+		ctx.translate(centerX,centerY);
 		ctx.rotate(.2);
+		ctx.translate(-centerX,-centerY);
 		drawCanvas();
+
 	}
 	var sizes = [29,50,57,58,72,100,114,144];
 	
@@ -248,6 +250,9 @@ function imageUploaded(osType)
 			
 				img_x = (MAX_WIDTH-w2)/2;
 				img_y = (MAX_HEIGHT-h2)/2;
+
+				centerX = img_x + (w2/2);
+				centerY = img_y + (h2/2);
 				
 
 				crop_x  =(MAX_WIDTH-crop_width)/2;
